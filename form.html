@@ -40,12 +40,36 @@
 
             $('#inputForm').submit(function(e) {
                 e.preventDefault();
+                if (validateForm()) {
+                    var word = $('#wordInput').val();
+                    var score = $('#scoreInput').val();
+                    table.row.add({ word: word, score: score }).draw();
+                    $('#wordInput').val('');
+                    $('#scoreInput').val('');
+                }
+            });
+
+            function validateForm() {
                 var word = $('#wordInput').val();
                 var score = $('#scoreInput').val();
-                table.row.add({ word: word, score: score }).draw();
-                $('#wordInput').val('');
-                $('#scoreInput').val('');
-            });
+
+                if (word.trim() === '') {
+                    alert('Word is required');
+                    return false;
+                }
+
+                if (score.trim() === '') {
+                    alert('Score is required');
+                    return false;
+                }
+
+                if (isNaN(score)) {
+                    alert('Score must be a number');
+                    return false;
+                }
+
+                return true;
+            }
         });
     </script>
 </body>
